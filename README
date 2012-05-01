@@ -1,1 +1,6 @@
 This is the en2cn project for ISIT318 subject
+
+1. If you want to enable Clean URLs, Apache configuration need to be changed (http://drupal.org/getting-started/clean-urls).
+2. Put all contributed (downloaded) modules into sites/all/modules
+3. Put all custom modules into /sites/default/modules
+4. Increase PHP memory limit to 64MB http://drupal.org/node/207036, and enable testing module for unit test
