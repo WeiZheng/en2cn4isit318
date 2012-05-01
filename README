@@ -1,5 +1,9 @@
 This is the en2cn project for ISIT318 subject
 
+Note:
+Use more git status to check the status of files.
+
+Configuration:
 1. If you want to enable Clean URLs, Apache configuration need to be changed (http://drupal.org/getting-started/clean-urls).
 2. Put all contributed (downloaded) modules into sites/all/modules
 3. Put all custom modules into /sites/default/modules
