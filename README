@@ -1,10 +1,31 @@
 This is the en2cn project for ISIT318 subject
 
-Note:
+git Note:
 Use more git status to check the status of files.
+
+---------------------------------
 
 Configuration:
 1. If you want to enable Clean URLs, Apache configuration need to be changed (http://drupal.org/getting-started/clean-urls).
 2. Put all contributed (downloaded) modules into sites/all/modules
 3. Put all custom modules into /sites/default/modules
-4. Increase PHP memory limit to 64MB http://drupal.org/node/207036, and enable testing module for unit test
+4. Increase PHP memory limit to 64MB (http://drupal.org/node/207036), and enable testing module for unit test
+
+---------------------------------
+
+Basic instructions of minor version update for Dummies (http://drupal.org/node/1223018)
+Posted by eventfarm on February 11, 2012 at 11:23pm
+I am a fairly technical person, however Drupal is a beast and unless you immerse yourself in it for a few hours, just following basic instructions can be a challenge.
+
+So I immersed myself in it and came up with this basic plan for updating. I had a basic installation, and all changes I've made have been through modules. I haven't edited any individual files to customize them.
+
+1. Backup your DB (I used the Backup and Migrate module - follow instructions for that)
+2. Using any file manager (I used my FTP client), change your /sites folder name to /Save
+3. Unpackage the update file on your local PC into a folder called 7.12
+4. Use an FTP client (such as Filezilla) and copy everything from the 7.12 local folder into the folder you have drupal installed in (ie, you should see /sites, /modules, /themes, etc to know you're in the right folder)
+5. Use the overwrite function on your file copy - this will overwrite everything
+6. Delete the new /sites folder
+7. Rename the /Save folder to /sites
+8. Go to www..com/update.php and follow the instructions.
+
+Worked well for me. I did it this way since I saw several references to NOT needing to delete all core files when doing a minor update (ie, 7.xx to 7.xx). I felt safer doing it this way.
