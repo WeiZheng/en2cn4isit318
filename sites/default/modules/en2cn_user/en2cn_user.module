@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * Implements hook_entity_info().
+ */
+function en2cn_user_entity_info() {
+  $return['en2cn_user'] = array(
+    'label' => t('en2cn User'),
+    'controller class' => 'En2CnUserController',
+    'base table' => 'en2cn_user',
+    'uri callback' => 'en2cn_user_uri',
+    'static cache' => TRUE,
+    'field cache' => FALSE,
+    'fieldable' => FALSE,
+  );
+
+  return $return;
+}
+
+/**
+ * Entity uri callback.
+ */
+function en2cn_user_uri($user) {
+  return array(
+    'path' => 'user/' . $user->uid,
+  );
+}

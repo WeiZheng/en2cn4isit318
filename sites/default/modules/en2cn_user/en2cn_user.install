@@ -1,0 +1,33 @@
+<?php
+
+function en2cn_user_schema() {
+  $schema['en2cn_user'] = array(
+    'description' => 'The en2cn_user extends standard users table for the en2cn project.',
+    'fields' => array(
+      'uid' => array(
+        'description' => 'The core {users}.uid, so this table has one-to-one relationship to the core users table',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'points' => array(
+        'description' => 'The points earned by the current user.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('uid'),
+    'foreign keys' => array(
+      'user' => array(
+        'table' => 'users',
+        'columns' => array(
+          'uid' => 'uid',
+        ),
+      ),
+    ),
+  );
+  
+  return $schema;
+}
