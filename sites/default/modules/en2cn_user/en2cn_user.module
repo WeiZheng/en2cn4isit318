@@ -12,6 +12,9 @@ function en2cn_user_entity_info() {
     'static cache' => TRUE,
     'field cache' => FALSE,
     'fieldable' => FALSE,
+    'entity keys' => array(
+      'id' => 'uid',
+     ),
   );
 
   return $return;
@@ -24,4 +27,18 @@ function en2cn_user_uri($user) {
   return array(
     'path' => 'user/' . $user->uid,
   );
+}
+
+/**
+ * Implements hook_user_insert().
+ */
+function en2cn_user_user_insert(&$edit, $account, $category) {
+  entity_get_controller('en2cn_user')->insert($account);
+}
+
+/**
+ * Implements hook_user_insert().
+ */
+function en2cn_user_user_delete($account) {
+  entity_get_controller('en2cn_user')->delete($account);
 }

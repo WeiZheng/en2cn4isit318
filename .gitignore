@@ -2,6 +2,7 @@
 .buildpath
 .project
 .settings
+/.idea
 /backup
 /sites/default/files/css
 /sites/default/files/js
