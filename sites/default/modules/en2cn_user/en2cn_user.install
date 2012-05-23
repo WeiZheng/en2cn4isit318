@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Implements hook_schema().
+ */
 function en2cn_user_schema() {
   $schema['en2cn_user'] = array(
     'description' => 'The en2cn_user extends standard users table for the en2cn project.',
@@ -28,6 +31,16 @@ function en2cn_user_schema() {
       ),
     ),
   );
-  
+
   return $schema;
+}
+
+/**
+ * Implements hook_enable().
+ *
+ * This function builds the en2cn_user table based on current users and posts
+ * when the en2cn_user module is enabled.
+ */
+function en2cn_user_enable() {
+
 }
