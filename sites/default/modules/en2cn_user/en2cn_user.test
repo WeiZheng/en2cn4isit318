@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Automatic unit test for the en2cn_user module
+ */
+
+class En2CnUserTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'en2cn_user module functionalities',
+      'description' => 'Test functionalities in the en2cn_user module.',
+      'group' => 'en2cn Project',
+    );
+  }
+
+  public function setUp() {
+    parent::setUp('en2cn_user');
+  }
+
+  public function testControllerInsert() {
+    global $user;
+
+    // Insert the current user into the en2cn_user table
+    entity_get_controller('en2cn_user')->insert($user);
+
+    // Load the user just inserted and verify
+    //entity_get_controller('en2cn_user')->load(array($user->uid));
+  }
+
+  public function testControllerDelete() {
+    global $user;
+
+    entity_get_controller('en2cn_user')->delete($user);
+  }
+
+  public function tearDown() {
+    parent::tearDown();
+  }
+
+}

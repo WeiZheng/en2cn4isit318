@@ -38,7 +38,7 @@ function en2cn_user_schema() {
 /**
  * Implements hook_enable().
  *
- * This function builds the en2cn_user table based on current users and posts
+ * This function builds the en2cn_user table based on existing users and posts
  * when the en2cn_user module is enabled.
  */
 function en2cn_user_enable() {

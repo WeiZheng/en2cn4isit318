@@ -4,11 +4,13 @@
  * Controller for adding and reducing en2cn user's contribution points.
  *
  * The default loader, which we extend, handles load() already. We only
- * need to add adding and reducing.
+ * need to add inserting, deleting, adding and reducing points functions.
  */
 class En2CnUserController extends DrupalDefaultEntityController {
 
   public function insert($account) {
+    //$transaction = db_transaction();
+
     try {
       db_insert('en2cn_user')
         ->fields(array(
@@ -16,8 +18,10 @@ class En2CnUserController extends DrupalDefaultEntityController {
         'uid' => $account->uid,
       ))
       ->execute();
+      return TRUE;
     }
     catch (Exception $e) {
+      //$transaction->rollback();
       watchdog_exception('en2cn_user', $e, NULL, WATCHDOG_ERROR);
       return FALSE;
     }
@@ -28,6 +32,7 @@ class En2CnUserController extends DrupalDefaultEntityController {
       db_delete('en2cn_user')
         ->condition('uid', $account->uid)
         ->execute();
+      return TRUE;
     }
     catch (Exception $e) {
       watchdog_exception('en2cn_user', $e, NULL, WATCHDOG_ERROR);
