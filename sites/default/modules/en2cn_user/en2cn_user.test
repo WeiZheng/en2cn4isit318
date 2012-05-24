@@ -19,20 +19,53 @@ class En2CnUserTestCase extends DrupalWebTestCase {
     parent::setUp('en2cn_user');
   }
 
-  public function testControllerInsert() {
-    global $user;
+  public function testUserInsert() {
+    $new_user = array(
+      'name' => 'weizheng',
+      'pass' => user_password(),
+      'mail' => 'pro_zw@tom.com'
+    );
+    $account = user_save(null, $new_user);
 
-    // Insert the current user into the en2cn_user table
-    entity_get_controller('en2cn_user')->insert($user);
+    // Check if the new en2cn_user has been created
+    $query = db_select('en2cn_user', 'n')
+      ->fields('n', array('uid', 'points'))
+      ->condition('n.uid', $account->uid);
+    $result = $query->execute();
 
-    // Load the user just inserted and verify
-    //entity_get_controller('en2cn_user')->load(array($user->uid));
+    $this->assertEqual(count($result), 1, t('One user has been added'));
+
+    $record = $result->fetchAssoc();
+    $this->assertEqual($record['uid'], $account->uid, t('The uid is confirmed'));
+    $this->assertEqual($record['points'], 0, t('The initial points of the user is 0'));
+
+    // Assert insert same uid will not cause exception and just return TRUE,
+    // which means the insert is ignored
+    $this->assertTrue(entity_get_controller('en2cn_user')->insert($account),
+      t('Insert duplicated user has been ignored'));
   }
 
   public function testControllerDelete() {
-    global $user;
+    // Each test is independent, so firstly, we need to add a user
+    $new_user = array(
+      'name' => 'weizheng',
+      'pass' => user_password(),
+      'mail' => 'pro_zw@tom.com'
+    );
+    user_save(null, $new_user);
 
-    entity_get_controller('en2cn_user')->delete($user);
+    $new_user = user_load_by_mail('pro_zw@tom.com');
+    $this->assertEqual($new_user->name, 'weizheng', t('The user has been loaded'));
+
+    user_delete($new_user->uid);
+
+    // Check if the new en2cn_user just added has been delete
+    $query = db_select('en2cn_user', 'n')
+      ->fields('n', array('uid', 'points'))
+      ->condition('n.uid', $new_user->uid);
+    $result = $query->execute();
+
+    $this->assertFalse($result->fetchAssoc(), t('The user has been deleted'));
   }
 
   public function tearDown() {

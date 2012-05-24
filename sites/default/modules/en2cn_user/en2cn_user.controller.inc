@@ -9,19 +9,20 @@
 class En2CnUserController extends DrupalDefaultEntityController {
 
   public function insert($account) {
-    //$transaction = db_transaction();
-
     try {
-      db_insert('en2cn_user')
-        ->fields(array(
-        'points' => 0,
-        'uid' => $account->uid,
-      ))
-      ->execute();
+      // If there is no record whose uid is $account->uid, create it
+      // or do nothing
+      db_merge('en2cn_user')
+        ->key(array('uid' => $account->uid))
+        ->insertFields(array(
+          'uid' => $account->uid,
+          'points' => 0,
+      ))->execute();
+
+      // If there is no exception, just return true
       return TRUE;
     }
     catch (Exception $e) {
-      //$transaction->rollback();
       watchdog_exception('en2cn_user', $e, NULL, WATCHDOG_ERROR);
       return FALSE;
     }
@@ -32,6 +33,7 @@ class En2CnUserController extends DrupalDefaultEntityController {
       db_delete('en2cn_user')
         ->condition('uid', $account->uid)
         ->execute();
+
       return TRUE;
     }
     catch (Exception $e) {

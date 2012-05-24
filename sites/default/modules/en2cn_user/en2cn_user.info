@@ -6,3 +6,4 @@ files[] = en2cn_user.install
 files[] = en2cn_user.module
 files[] = en2cn_user.test
 files[] = en2cn_user.controller.inc
+dependencies[] = user
