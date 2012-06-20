@@ -38,9 +38,17 @@ function en2cn_user_schema() {
 /**
  * Implements hook_enable().
  *
- * This function builds the en2cn_user table based on existing users and posts
+ * This function builds the en2cn_user table based on existing users
  * when the en2cn_user module is enabled.
  */
 function en2cn_user_enable() {
+  $query = db_select('users', 'u');
+  $query->fields('u', array('uid'));
+  $result = $query->execute();
 
+  $account = new stdClass();
+  while($record = $result->fetchAssoc()) {
+    $account->uid = $record['uid'];
+    entity_get_controller('en2cn_user')->insert($account);
+  }
 }

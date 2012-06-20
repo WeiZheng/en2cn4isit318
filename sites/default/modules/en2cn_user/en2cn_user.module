@@ -42,3 +42,41 @@ function en2cn_user_user_insert(&$edit, $account, $category) {
 function en2cn_user_user_delete($account) {
   entity_get_controller('en2cn_user')->delete($account);
 }
+
+/**
+ * Implements hook_help().
+ */
+function en2cn_user_help($path, $arg) {
+  if ($path == 'admin/help#en2cn_user') {
+    return t('User module of en2cn project for adding additional user
+    information fields needed.');
+  }
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function en2cn_user_block_info() {
+  $blocks = array();
+
+  $blocks['user_profile_summary'] = array(
+    'info' => t('A listing of important user profile entries.'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function en2cn_user_block_view($delta = '') {
+  if ($delta == 'user_profile_summary') {
+    $block = array(
+      'subject' => t('User Profile Summary'),
+      'content' => t('User name comes here'),
+    );
+
+    return $block;
+  }
+}
