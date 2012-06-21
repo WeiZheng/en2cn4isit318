@@ -41,4 +41,20 @@ class En2CnUserController extends DrupalDefaultEntityController {
       return FALSE;
     }
   }
+
+  public function getPoints($uid) {
+    $query = db_select('en2cn_user', 'u');
+    $query->fields('u', array('points'));
+    $query->condition('u.uid', $value = $uid, $operator = '=');
+
+    $result = $query->execute();
+    $record = $result->fetchAssoc();
+
+    if ($record) {
+      return $record['points'];
+    } else {
+      return 'NA';
+    }
+  }
+
 }

@@ -72,10 +72,29 @@ function en2cn_user_block_info() {
  */
 function en2cn_user_block_view($delta = '') {
   if ($delta == 'user_profile_summary') {
-    $block = array(
-      'subject' => t('User Profile Summary'),
-      'content' => t('User name comes here'),
-    );
+    if (user_is_logged_in()) {
+      global $user;
+      $login_user = user_load($user->uid);
+
+      $user_summary = array();
+      $user_summary[] = t('Joined: ') . format_date($login_user->created);
+      $user_summary[]  = t('Timezone: ') . $login_user->timezone;
+      $user_summary[] = t('Points: ') . entity_get_controller('en2cn_user')->getPoints($user->uid);
+
+      $theme_args = array('items' => $user_summary, 'type' => 'ul');
+      $content = theme('item_list', $theme_args);
+
+      $block = array(
+        'subject' => $login_user->name,
+        'content' => $content,
+      );
+    } else {
+      $block = array(
+        'subject' => 'Config needed',
+        'content' => 'This block should not be displayed when the user
+        does not login. It can be configured at Admin->Block->Config.',
+      );
+    }
 
     return $block;
   }
