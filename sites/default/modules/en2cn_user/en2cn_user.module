@@ -79,7 +79,7 @@ function en2cn_user_block_view($delta = '') {
       $user_summary = array();
       $user_summary[] = t('Joined: ') . format_date($login_user->created);
       $user_summary[]  = t('Timezone: ') . $login_user->timezone;
-      $user_summary[] = t('Points: ') . entity_get_controller('en2cn_user')->getPoints($user->uid);
+      $user_summary[] = t('Points: ') . en2cn_user_get_points($user->uid);
 
       $theme_args = array('items' => $user_summary, 'type' => 'ul');
       $content = theme('item_list', $theme_args);
@@ -98,4 +98,13 @@ function en2cn_user_block_view($delta = '') {
 
     return $block;
   }
+}
+
+/**
+ * Get a en2cn user's contribution points
+ * @param $uid
+ * @return mixed
+ */
+function en2cn_user_get_points($uid) {
+  return entity_get_controller('en2cn_user')->getPoints($uid);
 }
